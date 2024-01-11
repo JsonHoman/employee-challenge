@@ -1,0 +1,40 @@
+# IntelliJ IDEA
+.idea/
+
+# Gradle
+build/
+.gradle/
+
+# Spring Boot
+target/
+*.iml
+
+# Logs
+log/
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Compiled bytecode
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Local configuration file
+application.properties
+
+# IDE-specific files
+.vscode/
+*.code-workspace
+*.ipr
+*.iws
+*.idea/
+*.suo
+*.classpath
+*.project
+*.settings/
