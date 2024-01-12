@@ -1,4 +1,4 @@
-package com.mindex.challenge.service.impl;
+package com.mindex.challenge;
 
 import com.mindex.challenge.data.Employee;
 import com.mindex.challenge.service.EmployeeService;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class EmployeeServiceImplTest {
+public class EmployeeIntegrationTest {
 
     private String employeeUrl;
     private String employeeIdUrl;
@@ -41,7 +41,7 @@ public class EmployeeServiceImplTest {
     }
 
     @Test
-    public void testCreateReadUpdate() {
+    public void testCreateReadUpdateEmployeeIntegration() {
         Employee testEmployee = new Employee();
         testEmployee.setFirstName("John");
         testEmployee.setLastName("Doe");
