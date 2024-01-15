@@ -26,9 +26,8 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
     public ReportingStructure getNumberOfDirectReports(String employeeId) {
         LOG.debug("Calculating reporting structure with employeeId [{}]", employeeId);
 
-        int directReportCount = getDirectReports(employeeId);
-
         Employee employee = employeeRepository.findByEmployeeId(employeeId);
+        int directReportCount = getDirectReports(employee);
 
         ReportingStructure reportingStructure = new ReportingStructure();
         reportingStructure.setNumberOfReports(directReportCount);
@@ -37,9 +36,8 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         return reportingStructure;
     }
 
-    private int getDirectReports(String employeeId) {
+    private int getDirectReports(Employee employee) {
         int directReportCount = 0;
-        Employee employee = employeeRepository.findByEmployeeId(employeeId);
 
         if (employee != null) {
             List<Employee> directReports = employee.getDirectReports();
@@ -47,7 +45,7 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
             if (directReports != null) {
                 for (Employee directReport : directReports) {
                     directReportCount++;
-                    directReportCount += getDirectReports(directReport.getEmployeeId());
+                    directReportCount += getDirectReports(directReport);
                 }
             }
         }
