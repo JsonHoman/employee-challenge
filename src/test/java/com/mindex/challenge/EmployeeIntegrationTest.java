@@ -1,7 +1,6 @@
 package com.mindex.challenge;
 
 import com.mindex.challenge.data.Employee;
-import com.mindex.challenge.service.EmployeeService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,9 +23,6 @@ public class EmployeeIntegrationTest {
 
     private String employeeUrl;
     private String employeeIdUrl;
-
-    @Autowired
-    private EmployeeService employeeService;
 
     @LocalServerPort
     private int port;
@@ -51,12 +47,14 @@ public class EmployeeIntegrationTest {
         // Create checks
         Employee createdEmployee = restTemplate.postForEntity(employeeUrl, testEmployee, Employee.class).getBody();
 
+        assertNotNull(createdEmployee);
         assertNotNull(createdEmployee.getEmployeeId());
         assertEmployeeEquivalence(testEmployee, createdEmployee);
 
 
         // Read checks
         Employee readEmployee = restTemplate.getForEntity(employeeIdUrl, Employee.class, createdEmployee.getEmployeeId()).getBody();
+        assertNotNull(readEmployee);
         assertEquals(createdEmployee.getEmployeeId(), readEmployee.getEmployeeId());
         assertEmployeeEquivalence(createdEmployee, readEmployee);
 
@@ -68,12 +66,15 @@ public class EmployeeIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         Employee updatedEmployee =
-                restTemplate.exchange(employeeIdUrl,
-                        HttpMethod.PUT,
-                        new HttpEntity<Employee>(readEmployee, headers),
-                        Employee.class,
-                        readEmployee.getEmployeeId()).getBody();
+                restTemplate.exchange(
+                                employeeIdUrl,
+                                HttpMethod.PUT,
+                                new HttpEntity<>(readEmployee, headers),
+                                Employee.class,
+                                readEmployee.getEmployeeId()
+                            ).getBody();
 
+        assertNotNull(updatedEmployee);
         assertEmployeeEquivalence(readEmployee, updatedEmployee);
     }
 
